@@ -396,4 +396,28 @@ class AccessIntegrationTest {
     mvc.perform(get("/tasks/999999/edit")).andExpect(status().isNotFound());
     mvc.perform(logout()).andExpect(unauthenticated()).andExpect(redirectedUrl("/login?logout"));
   }
+
+  @Test
+  @WithMockUser(username = "admin", roles = "ADMIN")
+  void adminCannotCreateTaskWithAnotherCreatorAndFormKeepsMatchingReleases() throws Exception {
+    var f = form(ownTask);
+    f.remove("version");
+    mvc.perform(post("/tasks").with(csrf()).params(f)).andExpect(status().isBadRequest());
+    assertEquals(2, tasks.count());
+    String html =
+        mvc.perform(get("/tasks/new"))
+            .andExpect(status().isOk())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertFalse(html.contains("OWN-RELEASE"));
+    html =
+        mvc.perform(get("/tasks/" + ownTask.getId() + "/edit"))
+            .andExpect(status().isOk())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertTrue(html.contains("OWN-RELEASE"));
+    assertFalse(html.contains("FOREIGN-RELEASE"));
+  }
 }

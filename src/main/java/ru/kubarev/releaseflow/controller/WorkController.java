@@ -58,7 +58,7 @@ public class WorkController {
   }
 
   private String taskForm(Model m) {
-    m.addAttribute("releases", work.releases());
+    m.addAttribute("releases", work.releasesForTask((Long) m.getAttribute("id")));
     return "task-form";
   }
 

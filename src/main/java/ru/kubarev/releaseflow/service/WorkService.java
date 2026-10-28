@@ -26,6 +26,11 @@ public class WorkService {
         : releases.findAllByOrderByTargetDateAsc();
   }
 
+  public List<Release> releasesForTask(Long taskId) {
+    Long ownerId = taskId == null ? users.current().getId() : task(taskId).getOwner().getId();
+    return releases().stream().filter(r -> r.getOwner().getId().equals(ownerId)).toList();
+  }
+
   public List<Task> tasks(String q, TaskStatus status, Long releaseId) {
     var list =
         access.ownOnly()
@@ -111,7 +116,6 @@ public class WorkService {
     }
     Release r = release(f.getReleaseId());
     access.write(r.getOwner());
-    if (id == null) t.setOwner(r.getOwner());
     if (!t.getOwner().getId().equals(r.getOwner().getId()))
       throw new ResponseStatusException(
           HttpStatus.BAD_REQUEST, "Владелец задачи и релиза должен совпадать");
