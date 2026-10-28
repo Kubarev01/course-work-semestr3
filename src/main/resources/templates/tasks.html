@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Задачи')}">
+</head>
+<body>
+<div class="app" th:classappend="${viewer == null} ? 'public' : ''">
+<aside th:replace="~{fragments :: sidebar}">
+</aside>
+<div class="workspace">
+<header th:replace="~{fragments :: header}">
+</header>
+<main>
+<div th:replace="~{fragments :: messages}">
+</div>
+<div class="page-heading">
+<div>
+<span class="eyebrow">РАБОЧАЯ ОБЛАСТЬ</span>
+<h1>Задачи</h1>
+<p>Приоритеты, оценки и движение к результату.</p>
+</div>
+<a class="button" th:if="${viewer.canWrite()}" href="/tasks/new">+ Новая задача</a>
+</div>
+<form class="filters panel" action="/tasks" method="get">
+<div>
+<label for="q">Поиск</label>
+<input name="q" id="q" th:value="${q}" placeholder="Название или описание">
+</div>
+<div>
+<label for="status">Статус</label>
+<select id="status" name="status">
+<option value="">Все статусы</option>
+<option th:each="s:${taskStatuses}" th:value="${s}" th:text="${s.label}" th:selected="${s == selectedStatus}">
+</option>
+</select>
+</div>
+<div>
+<label for="releaseId">Релиз</label>
+<select id="releaseId" name="releaseId">
+<option value="">Все релизы</option>
+<option th:each="r:${releases}" th:value="${r.id}" th:text="${r.name}" th:selected="${r.id == selectedRelease}">
+</option>
+</select>
+</div>
+<button class="button secondary">Применить</button>
+<a href="/tasks">Сбросить</a>
+</form>
+<section class="panel">
+<div class="section-heading">
+<h2 th:text="'Найдено задач: '+${tasks.size()}">
+</h2>
+<a href="/board">Вид доски</a>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Задача</th>
+<th>Релиз</th>
+<th>Статус</th>
+<th>Оценка</th>
+<th>Стоимость</th>
+<th>Срок</th>
+<th>Автор</th>
+<th th:if="${viewer.canWrite()}">Действия</th>
+</tr>
+</thead>
+<tbody>
+<tr th:each="t:${tasks}">
+<td>
+<small class="task-key" th:text="'RF-'+${t.id}">
+</small>
+<strong class="cell-title" th:text="${t.title}">
+</strong>
+<small th:text="${t.priority.label}+' приоритет'">
+</small>
+</td>
+<td th:text="${t.release.name}">
+</td>
+<td>
+<span class="pill" th:classappend="${t.status.name()}" th:text="${t.status.label}">
+</span>
+</td>
+<td th:text="${t.days}+' дн.'">
+</td>
+<td class="money" th:text="${t.cost}+' ₽'">
+</td>
+<td th:classappend="${t.overdue} ? 'danger-text' : ''" th:text="${t.dueDate}">
+</td>
+<td th:text="${t.owner.displayName}">
+</td>
+<td th:if="${viewer.canWrite()}">
+<div class="actions">
+<a th:href="@{/tasks/{id}/edit(id=${t.id})}">Изменить</a>
+<form th:action="@{/tasks/{id}/delete(id=${t.id})}" method="post">
+<button class="danger-link">Удалить</button>
+</form>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="empty" th:if="${tasks.empty}">
+<h2>Задач не найдено</h2>
+<p>Измените фильтры или добавьте первую задачу.</p>
+</div>
+</section>
+</main>
+<footer>ReleaseFlow · Кубарев Егор · РИЗ-250938У · Курсовой проект</footer>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Пользователи')}">
+</head>
+<body>
+<div class="app" th:classappend="${viewer == null} ? 'public' : ''">
+<aside th:replace="~{fragments :: sidebar}">
+</aside>
+<div class="workspace">
+<header th:replace="~{fragments :: header}">
+</header>
+<main>
+<div th:replace="~{fragments :: messages}">
+</div>
+<div class="page-heading">
+<div>
+<span class="eyebrow">АДМИНИСТРИРОВАНИЕ</span>
+<h1>Пользователи и роли</h1>
+<p>Новые аккаунты получают READ_ONLY. Назначайте доступ участника или администратора.</p>
+</div>
+</div>
+<section class="panel">
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Пользователь</th>
+<th>Логин</th>
+<th>Доступ</th>
+<th>Назначить роль</th>
+</tr>
+</thead>
+<tbody>
+<tr th:each="u:${users}">
+<td th:text="${u.displayName}">
+</td>
+<td class="mono" th:text="${u.username}">
+</td>
+<td>
+<span class="pill" th:text="${u.roleLabel}">
+</span>
+</td>
+<td>
+<form class="role-form" th:action="@{/admin/users/{id}/role(id=${u.id})}" method="post">
+<label class="sr-only" th:for="'role-'+${u.id}">Роль</label>
+<select name="role" th:id="'role-'+${u.id}">
+<option th:each="r:${roles}" th:value="${r}" th:text="${r.name()}" th:selected="${u.admin ? r.name() == 'ADMIN' : u.canWrite() ? r.name() == 'USER' : r.name() == 'READ_ONLY'}">
+</option>
+</select>
+<button class="button secondary">Применить</button>
+</form>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<p class="muted">Снять ADMIN у самого себя нельзя. Пароли и хеши здесь не показываются.</p>
+</main>
+<footer>ReleaseFlow · Кубарев Егор · РИЗ-250938У · Курсовой проект</footer>
+</div>
+</div>
+</body>
+</html>

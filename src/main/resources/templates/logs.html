@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Журнал действий')}">
+</head>
+<body>
+<div class="app" th:classappend="${viewer == null} ? 'public' : ''">
+<aside th:replace="~{fragments :: sidebar}">
+</aside>
+<div class="workspace">
+<header th:replace="~{fragments :: header}">
+</header>
+<main>
+<div th:replace="~{fragments :: messages}">
+</div>
+<div class="page-heading">
+<div>
+<span class="eyebrow">НАБЛЮДАЕМОСТЬ</span>
+<h1>Журнал действий</h1>
+<p>Последние 200 событий. Администратор видит все, остальные — свои.</p>
+</div>
+</div>
+<section class="panel">
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Время UTC</th>
+<th>Пользователь</th>
+<th>Событие</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr th:each="a:${actions}">
+<td class="mono" th:text="${a.dateActions}">
+</td>
+<td th:text="${a.actor}">
+</td>
+<td>
+<span class="pill mono" th:text="${a.action}">
+</span>
+</td>
+<td th:text="${a.description}">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="empty" th:if="${actions.empty}">Событий пока нет.</p>
+</section>
+<p class="muted">События сохраняются в USER_ACTIONS и logs/releaseflow.log. Пароли и токены не журналируются.</p>
+</main>
+<footer>ReleaseFlow · Кубарев Егор · РИЗ-250938У · Курсовой проект</footer>
+</div>
+</div>
+</body>
+</html>

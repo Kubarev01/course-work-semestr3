@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Обзор')}">
+</head>
+<body>
+<div class="app" th:classappend="${viewer == null} ? 'public' : ''">
+<aside th:replace="~{fragments :: sidebar}">
+</aside>
+<div class="workspace">
+<header th:replace="~{fragments :: header}">
+</header>
+<main>
+<div th:replace="~{fragments :: messages}">
+</div>
+<div class="page-heading">
+<div>
+<span class="eyebrow">ОБЗОР ПРОЕКТА</span>
+<h1>Работа движется вперёд</h1>
+<p>Задачи, релизы и ближайшие ориентиры в одном месте.</p>
+</div>
+<a class="button" th:if="${viewer.canWrite()}" href="/tasks/new">+ Новая задача</a>
+</div>
+<section class="stats">
+<article class="stat">
+<small>Всего задач</small>
+<strong th:text="${tasks.size()}">
+</strong>
+<span>В доступной области</span>
+</article>
+<article class="stat">
+<small>Готово</small>
+<strong th:text="${done}">
+</strong>
+<span>Завершённые задачи</span>
+</article>
+<article class="stat">
+<small>Релизов</small>
+<strong th:text="${releases.size()}">
+</strong>
+<span>План выпуска продукта</span>
+</article>
+<article class="stat">
+<small>Просрочено</small>
+<strong th:text="${overdue}">
+</strong>
+<span>Требуют внимания</span>
+</article>
+</section>
+<section class="dashboard-grid">
+<article class="panel">
+<div class="section-heading">
+<h2>Ближайшие релизы</h2>
+<a href="/releases">Все релизы →</a>
+</div>
+<div class="release-line" th:each="r:${releases}">
+<div>
+<strong th:text="${r.name}">
+</strong>
+<p th:text="${r.description}">
+</p>
+</div>
+<span class="pill" th:text="${r.targetDate}">
+</span>
+</div>
+<p class="empty" th:if="${releases.empty}">Релизов пока нет.</p>
+</article>
+<article class="panel accent">
+<span class="eyebrow">ПЛАНИРОВАНИЕ</span>
+<h2>Сколько стоит<br>следующий выпуск?</h2>
+<p>Оцените бюджет с резервом и оставшуюся нагрузку команды.</p>
+<a class="button" href="/estimate">Рассчитать релиз</a>
+<div class="mini-track">
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+</div>
+<small>Оценки задач → бюджет → плановая дата</small>
+</article>
+</section>
+<section class="panel">
+<div class="section-heading">
+<h2>Последние задачи</h2>
+<a href="/board">Открыть доску →</a>
+</div>
+<div class="task-line" th:each="t,iter:${tasks}" th:if="${iter.index < 5}">
+<span class="task-key" th:text="'RF-'+${t.id}">
+</span>
+<strong th:text="${t.title}">
+</strong>
+<span class="pill" th:classappend="${t.status.name()}" th:text="${t.status.label}">
+</span>
+<span class="muted" th:text="${t.dueDate}">
+</span>
+</div>
+<p class="empty" th:if="${tasks.empty}">Задач пока нет.</p>
+</section>
+</main>
+<footer>ReleaseFlow · Кубарев Егор · РИЗ-250938У · Курсовой проект</footer>
+</div>
+</div>
+</body>
+</html>

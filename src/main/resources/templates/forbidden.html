@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Доступ запрещён')}">
+</head>
+<body>
+<div class="app" th:classappend="${viewer == null} ? 'public' : ''">
+<aside th:replace="~{fragments :: sidebar}">
+</aside>
+<div class="workspace">
+<header th:replace="~{fragments :: header}">
+</header>
+<main>
+<div th:replace="~{fragments :: messages}">
+</div>
+<section class="panel empty">
+<span class="eyebrow">403 / ДОСТУП ОГРАНИЧЕН</span>
+<h1>Здесь нужны другие права</h1>
+<p>Операция недоступна для вашей роли или запись принадлежит другому пользователю.</p>
+<a class="button" href="/dashboard">Вернуться к обзору</a>
+</section>
+</main>
+<footer>ReleaseFlow · Кубарев Егор · РИЗ-250938У · Курсовой проект</footer>
+</div>
+</div>
+</body>
+</html>

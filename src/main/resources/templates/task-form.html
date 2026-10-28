@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Карточка задачи')}">
+</head>
+<body>
+<div class="app" th:classappend="${viewer == null} ? 'public' : ''">
+<aside th:replace="~{fragments :: sidebar}">
+</aside>
+<div class="workspace">
+<header th:replace="~{fragments :: header}">
+</header>
+<main>
+<div th:replace="~{fragments :: messages}">
+</div>
+<div class="page-heading">
+<div>
+<span class="eyebrow">КАРТОЧКА ЗАДАЧИ</span>
+<h1>
+<span th:text="${id == null} ? 'Новая задача' : 'Изменение задачи'">
+</span>
+</h1>
+<p>
+</p>
+</div>
+<a href="/tasks">← К задачам</a>
+</div>
+<div class="notice" th:if="${releases.empty}">Сначала <a href="/releases/new">создайте релиз</a>.</div>
+<form class="panel editor" th:action="${id == null} ? @{/tasks} : @{/tasks/{id}(id=${id})}" th:object="${form}" method="post">
+<input type="hidden" th:field="*{version}">
+<div class="field">
+<label for="title">Название задачи</label>
+<input th:field="*{title}" type="text" required maxlength="120">
+<p class="field-error" th:errors="*{title}">
+</p>
+</div>
+<label for="description">Описание</label>
+<textarea th:field="*{description}" maxlength="2000" rows="3">
+</textarea>
+<p class="field-error" th:errors="*{description}">
+</p>
+<div class="form-grid">
+<div class="field">
+<label for="releaseId">Релиз</label>
+<select th:field="*{releaseId}" required>
+<option value="">Выберите релиз</option>
+<option th:each="r:${releases}" th:value="${r.id}" th:text="${r.name}">
+</option>
+</select>
+<p class="field-error" th:errors="*{releaseId}">
+</p>
+</div>
+<div class="field">
+<label for="dueDate">Срок</label>
+<input th:field="*{dueDate}" type="date" required>
+<p class="field-error" th:errors="*{dueDate}">
+</p>
+</div>
+<div class="field">
+<label for="status">Статус</label>
+<select th:field="*{status}">
+<option th:each="s:${taskStatuses}" th:value="${s}" th:text="${s.label}">
+</option>
+</select>
+<p class="field-error" th:errors="*{status}">
+</p>
+</div>
+<div class="field">
+<label for="priority">Приоритет</label>
+<select th:field="*{priority}">
+<option th:each="s:${priorities}" th:value="${s}" th:text="${s.label}">
+</option>
+</select>
+<p class="field-error" th:errors="*{priority}">
+</p>
+</div>
+<div class="field">
+<label for="days">Оценка, человеко-дни</label>
+<input th:field="*{days}" type="number" min="0.25" max="365" step="0.01" required>
+<p class="field-error" th:errors="*{days}">
+</p>
+</div>
+<div class="field">
+<label for="dailyRate">Стоимость дня, ₽</label>
+<input th:field="*{dailyRate}" type="number" min="0" max="1000000" step="0.01" required>
+<p class="field-error" th:errors="*{dailyRate}">
+</p>
+</div>
+</div>
+<small>Стоимость = оценка × дневная ставка. Владелец назначается сервером.</small>
+<div class="form-actions">
+<button class="button" th:disabled="${releases.empty}">Сохранить задачу</button>
+<a href="/tasks">Отмена</a>
+</div>
+</form>
+</main>
+<footer>ReleaseFlow · Кубарев Егор · РИЗ-250938У · Курсовой проект</footer>
+</div>
+</div>
+</body>
+</html>

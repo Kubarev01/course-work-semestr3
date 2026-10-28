@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Вход')}">
+</head>
+<body>
+<div class="app" th:classappend="${viewer == null} ? 'public' : ''">
+<aside th:replace="~{fragments :: sidebar}">
+</aside>
+<div class="workspace">
+<header th:replace="~{fragments :: header}">
+</header>
+<main>
+<div th:replace="~{fragments :: messages}">
+</div>
+<section class="auth panel">
+<span class="eyebrow">РАБОЧАЯ ОБЛАСТЬ</span>
+<h1>С возвращением</h1>
+<p>Войдите, чтобы продолжить работу над релизом.</p>
+<div class="notice error" th:if="${param.error}">Неверный логин или пароль.</div>
+<div class="notice success" th:if="${param.logout}">Вы вышли из системы.</div>
+<div class="notice success" th:if="${param.registered}">Аккаунт создан с ролью READ_ONLY. Теперь можно войти.</div>
+<form th:action="@{/login}" method="post">
+<label for="username">Логин</label>
+<input id="username" name="username" autocomplete="username" required>
+<label for="password">Пароль</label>
+<input id="password" name="password" type="password" autocomplete="current-password" required>
+<button class="button full">Войти</button>
+</form>
+<p>
+<a href="/register">Создать аккаунт</a>
+</p>
+</section>
+</main>
+<footer>ReleaseFlow · Кубарев Егор · РИЗ-250938У · Курсовой проект</footer>
+</div>
+</div>
+</body>
+</html>

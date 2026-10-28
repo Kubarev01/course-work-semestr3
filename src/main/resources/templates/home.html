@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Главная')}">
+</head>
+<body>
+<div class="app" th:classappend="${viewer == null} ? 'public' : ''">
+<aside th:replace="~{fragments :: sidebar}">
+</aside>
+<div class="workspace">
+<header th:replace="~{fragments :: header}">
+</header>
+<main>
+<div th:replace="~{fragments :: messages}">
+</div>
+<section class="hero">
+<span class="eyebrow">ПЛАНИРОВАНИЕ РАЗРАБОТКИ</span>
+<h1>От первой задачи<br>до готового релиза</h1>
+<p>Объединяйте задачи в релизы, оценивайте трудозатраты и держите под контролем сроки и бюджет разработки.</p>
+<div class="actions">
+<a class="button" href="/dashboard">Открыть рабочую область →</a>
+<a class="button secondary" href="/register">Создать аккаунт</a>
+</div>
+</section>
+<section class="feature-grid">
+<article class="panel">
+<span class="eyebrow">01 / ПЛАН</span>
+<h2>Общий контекст</h2>
+<p>Связывайте задачи с конкретной версией продукта.</p>
+</article>
+<article class="panel">
+<span class="eyebrow">02 / ПРОЦЕСС</span>
+<h2>Видимый прогресс</h2>
+<p>Контролируйте работу в списке с фильтрами и на доске.</p>
+</article>
+<article class="panel">
+<span class="eyebrow">03 / ОЦЕНКА</span>
+<h2>Обоснованный бюджет</h2>
+<p>Считайте стоимость с резервом и ориентир завершения.</p>
+</article>
+</section>
+</main>
+<footer>ReleaseFlow · Кубарев Егор · РИЗ-250938У · Курсовой проект</footer>
+</div>
+</div>
+</body>
+</html>

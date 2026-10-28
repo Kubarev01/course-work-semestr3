@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Регистрация')}">
+</head>
+<body>
+<div class="app" th:classappend="${viewer == null} ? 'public' : ''">
+<aside th:replace="~{fragments :: sidebar}">
+</aside>
+<div class="workspace">
+<header th:replace="~{fragments :: header}">
+</header>
+<main>
+<div th:replace="~{fragments :: messages}">
+</div>
+<section class="auth panel">
+<span class="eyebrow">НОВЫЙ АККАУНТ</span>
+<h1>Присоединиться к проекту</h1>
+<p>Новые пользователи получают доступ только для чтения.</p>
+<form th:action="@{/register}" th:object="${form}" method="post">
+<div class="field">
+<label for="displayName">Ваше имя</label>
+<input th:field="*{displayName}" type="text" required maxlength="80">
+<p class="field-error" th:errors="*{displayName}">
+</p>
+</div>
+<div class="field">
+<label for="username">Логин</label>
+<input th:field="*{username}" type="text" required minlength="3" maxlength="40">
+<p class="field-error" th:errors="*{username}">
+</p>
+</div>
+<small>Латинские буквы, цифры, . _ -</small>
+<label for="password">Пароль</label>
+<input id="password" name="password" type="password" required minlength="8" maxlength="60" autocomplete="new-password">
+<p class="field-error" th:errors="*{password}">
+</p>
+<p class="field-error" th:errors="*{passwordLengthValid}">
+</p>
+<small>От 8 символов и не более 72 байт UTF-8.</small>
+<button class="button full">Создать аккаунт</button>
+</form>
+<p>
+<a href="/login">Уже есть аккаунт</a>
+</p>
+</section>
+</main>
+<footer>ReleaseFlow · Кубарев Егор · РИЗ-250938У · Курсовой проект</footer>
+</div>
+</div>
+</body>
+</html>

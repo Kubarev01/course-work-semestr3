@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Карточка релиза')}">
+</head>
+<body>
+<div class="app" th:classappend="${viewer == null} ? 'public' : ''">
+<aside th:replace="~{fragments :: sidebar}">
+</aside>
+<div class="workspace">
+<header th:replace="~{fragments :: header}">
+</header>
+<main>
+<div th:replace="~{fragments :: messages}">
+</div>
+<div class="page-heading">
+<div>
+<span class="eyebrow">КАРТОЧКА РЕЛИЗА</span>
+<h1>
+<span th:text="${id == null} ? 'Новый релиз' : 'Изменение релиза'">
+</span>
+</h1>
+<p>
+</p>
+</div>
+<a href="/releases">← К релизам</a>
+</div>
+<form class="panel editor" th:action="${id == null} ? @{/releases} : @{/releases/{id}(id=${id})}" th:object="${form}" method="post">
+<input type="hidden" th:field="*{version}">
+<div class="field">
+<label for="name">Название релиза</label>
+<input th:field="*{name}" type="text" required maxlength="100">
+<p class="field-error" th:errors="*{name}">
+</p>
+</div>
+<label for="description">Цель и содержание</label>
+<textarea th:field="*{description}" rows="4" maxlength="1500">
+</textarea>
+<p class="field-error" th:errors="*{description}">
+</p>
+<div class="form-grid">
+<div class="field">
+<label for="targetDate">Плановая дата</label>
+<input th:field="*{targetDate}" type="date" required>
+<p class="field-error" th:errors="*{targetDate}">
+</p>
+</div>
+<div class="field">
+<label for="status">Статус</label>
+<select th:field="*{status}">
+<option th:each="s:${releaseStatuses}" th:value="${s}" th:text="${s.label}">
+</option>
+</select>
+<p class="field-error" th:errors="*{status}">
+</p>
+</div>
+</div>
+<div class="form-actions">
+<button class="button">Сохранить релиз</button>
+<a href="/releases">Отмена</a>
+</div>
+</form>
+</main>
+<footer>ReleaseFlow · Кубарев Егор · РИЗ-250938У · Курсовой проект</footer>
+</div>
+</div>
+</body>
+</html>

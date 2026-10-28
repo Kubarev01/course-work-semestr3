@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Релизы')}">
+</head>
+<body>
+<div class="app" th:classappend="${viewer == null} ? 'public' : ''">
+<aside th:replace="~{fragments :: sidebar}">
+</aside>
+<div class="workspace">
+<header th:replace="~{fragments :: header}">
+</header>
+<main>
+<div th:replace="~{fragments :: messages}">
+</div>
+<div class="page-heading">
+<div>
+<span class="eyebrow">ПЛАН ВЫПУСКА</span>
+<h1>Релизы</h1>
+<p>Объединяйте задачи вокруг конкретной версии продукта.</p>
+</div>
+<a class="button" th:if="${viewer.canWrite()}" href="/releases/new">+ Новый релиз</a>
+</div>
+<section class="release-grid">
+<article class="panel release-card" th:each="r:${releases}">
+<div class="section-heading">
+<span class="eyebrow" th:text="'РЕЛИЗ #'+${r.id}">
+</span>
+<span class="pill" th:text="${r.status.label}">
+</span>
+</div>
+<h2 th:text="${r.name}">
+</h2>
+<p th:text="${r.description}">
+</p>
+<dl>
+<dt>Плановая дата</dt>
+<dd th:text="${r.targetDate}">
+</dd>
+<dt>Владелец</dt>
+<dd th:text="${r.owner.displayName}">
+</dd>
+</dl>
+<div class="actions">
+<a th:href="@{/tasks(releaseId=${r.id})}">Задачи релиза</a>
+<a th:if="${viewer.canWrite()}" th:href="@{/releases/{id}/edit(id=${r.id})}">Изменить</a>
+<form th:if="${viewer.canWrite()}" th:action="@{/releases/{id}/delete(id=${r.id})}" method="post">
+<button class="danger-link">Удалить</button>
+</form>
+</div>
+</article>
+</section>
+<section class="panel empty" th:if="${releases.empty}">
+<h2>Первый релиз ещё впереди</h2>
+<p>Создайте релиз, затем добавьте задачи.</p>
+</section>
+</main>
+<footer>ReleaseFlow · Кубарев Егор · РИЗ-250938У · Курсовой проект</footer>
+</div>
+</div>
+</body>
+</html>

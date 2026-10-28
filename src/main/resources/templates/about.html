@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('О приложении')}">
+</head>
+<body>
+<div class="app" th:classappend="${viewer == null} ? 'public' : ''">
+<aside th:replace="~{fragments :: sidebar}">
+</aside>
+<div class="workspace">
+<header th:replace="~{fragments :: header}">
+</header>
+<main>
+<div th:replace="~{fragments :: messages}">
+</div>
+<div class="page-heading">
+<div>
+<span class="eyebrow">О ПРОЕКТЕ</span>
+<h1>ReleaseFlow</h1>
+<p>Трекер задач и релизов</p>
+</div>
+<a href="/dashboard" class="button secondary">В рабочую область</a>
+</div>
+<article class="panel prose">
+<h2>Разработчик</h2>
+<p>Кубарев Егор, РИЗ-250938У. Уральский федеральный университет.</p>
+<h2>Назначение</h2>
+<p>Планирование разработки: задачи, релизы, сроки, трудозатраты и стоимость. Участник работает со своими записями, администратор — со всеми.</p>
+<h2>Технологии</h2>
+<p>Spring Boot 3.5.7, Spring MVC, Security, Thymeleaf, Data JPA, Hibernate, H2, Lombok и Actuator. Пароли BCrypt; формы защищены CSRF.</p>
+<h2>Границы расчёта</h2>
+<p>Это оценка на основе трудозатрат задач. Выходные пропускаются, праздники и зависимости между задачами не моделируются. Нулевая оценка релиза означает отсутствие задач.</p>
+<a href="/">На главную</a>
+</article>
+</main>
+<footer>ReleaseFlow · Кубарев Егор · РИЗ-250938У · Курсовой проект</footer>
+</div>
+</div>
+</body>
+</html>

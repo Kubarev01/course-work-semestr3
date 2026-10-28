@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Ошибка')}">
+</head>
+<body>
+<main class="panel error-page">
+<span class="eyebrow" th:text="${status}">
+</span>
+<h1>Не удалось выполнить действие</h1>
+<p th:if="${status == 404}">Запись не найдена.</p>
+<p th:if="${status == 409}">Запись уже изменена. Откройте карточку заново.</p>
+<p th:if="${status != 404 and status != 409}">Проверьте данные или вернитесь в рабочую область.</p>
+<a class="button" href="/dashboard">К обзору</a>
+</main>
+</body>
+</html>

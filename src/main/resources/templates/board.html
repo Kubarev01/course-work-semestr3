@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Доска')}">
+</head>
+<body>
+<div class="app" th:classappend="${viewer == null} ? 'public' : ''">
+<aside th:replace="~{fragments :: sidebar}">
+</aside>
+<div class="workspace">
+<header th:replace="~{fragments :: header}">
+</header>
+<main>
+<div th:replace="~{fragments :: messages}">
+</div>
+<div class="page-heading">
+<div>
+<span class="eyebrow">ПРОЦЕСС РАЗРАБОТКИ</span>
+<h1>Доска задач</h1>
+<p>Три состояния, один поток работы.</p>
+</div>
+<a class="button secondary" href="/tasks">Список задач</a>
+</div>
+<section class="board">
+<div class="board-column" th:each="s:${taskStatuses}">
+<h2 th:text="${s.label}">
+</h2>
+<article class="task-card" th:each="t:${tasks}" th:if="${t.status == s}">
+<div class="section-heading">
+<span class="task-key" th:text="'RF-'+${t.id}">
+</span>
+<span class="priority" th:classappend="${t.priority.name()}" th:text="${t.priority.label}">
+</span>
+</div>
+<h3 th:text="${t.title}">
+</h3>
+<p th:text="${t.release.name}">
+</p>
+<div class="section-heading">
+<span th:text="${t.days}+' дн.'">
+</span>
+<span th:text="${t.dueDate}">
+</span>
+</div>
+<a th:if="${viewer.canWrite()}" th:href="@{/tasks/{id}/edit(id=${t.id})}">Открыть карточку →</a>
+</article>
+</div>
+</section>
+</main>
+<footer>ReleaseFlow · Кубарев Егор · РИЗ-250938У · Курсовой проект</footer>
+</div>
+</div>
+</body>
+</html>
