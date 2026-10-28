@@ -1,0 +1,6 @@
+target/
+testdb/
+logs/
+.DS_Store
+*.log
+.env
