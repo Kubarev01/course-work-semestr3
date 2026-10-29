@@ -112,7 +112,6 @@ class AccessIntegrationTest {
         "/tasks",
         "/releases",
         "/logs",
-        "/estimate",
         "/admin/users",
         "/actuator/health"
       })
@@ -186,7 +185,7 @@ class AccessIntegrationTest {
   }
 
   @ParameterizedTest
-  @ValueSource(strings = {"/register", "/login", "/tasks", "/releases", "/estimate"})
+  @ValueSource(strings = {"/register", "/login", "/tasks", "/releases"})
   void csrfRequired(String p) throws Exception {
     mvc.perform(post(p)).andExpect(status().isForbidden());
   }
@@ -334,17 +333,9 @@ class AccessIntegrationTest {
 
   @Test
   @WithMockUser(username = "egor", roles = "USER")
-  void adminDeniedAndEstimateForeignDenied() throws Exception {
+  void adminEndpointsDenied() throws Exception {
     mvc.perform(get("/admin/users")).andExpect(status().isForbidden());
     mvc.perform(get("/actuator/health")).andExpect(status().isForbidden());
-    mvc.perform(
-            post("/estimate")
-                .with(csrf())
-                .param("releaseId", other.getId().toString())
-                .param("people", "1")
-                .param("reserve", "15")
-                .param("startDate", "2026-10-28"))
-        .andExpect(status().isForbidden());
   }
 
   @Test
@@ -379,7 +370,7 @@ class AccessIntegrationTest {
   @WithMockUser(username = "admin", roles = "ADMIN")
   void allFormsRenderAndNoHashLeak() throws Exception {
     for (String path :
-        List.of("/tasks/new", "/releases/new", "/estimate", "/admin/users", "/about")) {
+        List.of("/tasks/new", "/releases/new", "/admin/users", "/about")) {
       String html =
           mvc.perform(get(path))
               .andExpect(status().isOk())
