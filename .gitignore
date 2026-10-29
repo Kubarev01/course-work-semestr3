@@ -1,9 +1,28 @@
-target/
-testdb/
-logs/
-.DS_Store
-*.log
-.env
+# Build output and packaged distributions
+/target/
+/dist/
+*.jar
+*.bundle
+*.zip
 
-evidence/database/
-dist/
+# Local database and runtime logs
+/testdb/
+/logs/
+*.mv.db
+*.trace.db
+*.log
+
+# Local environment and editor settings
+.env
+.env.*
+!.env.example
+.DS_Store
+.idea/
+.vscode/
+
+# Coursework preparation materials (kept separately)
+/docs/
+/evidence/
+/tools/
+/work/
+/design-system/
