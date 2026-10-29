@@ -6,3 +6,4 @@ logs/
 .env
 
 evidence/database/
+dist/
