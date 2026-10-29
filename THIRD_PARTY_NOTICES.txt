@@ -1,0 +1,22 @@
+ReleaseFlow coursework uses unmodified third-party libraries managed by Maven.
+The source code of ReleaseFlow belongs to its author. Third-party components
+retain their respective copyrights and license terms.
+
+Spring Boot and Spring Framework: Apache License 2.0.
+https://github.com/spring-projects/spring-boot
+https://www.apache.org/licenses/LICENSE-2.0
+
+H2 Database Engine 2.3.232: MPL 2.0 or EPL 1.0.
+Source code and license: https://github.com/h2database/h2database
+https://h2database.github.io/html/license.html
+H2 and its contributors provide the software on an AS IS basis, without
+warranties or conditions of any kind. The contributors disclaim liability
+for damages arising from the software. No additional warranty is offered
+on their behalf by this coursework distribution.
+
+Hibernate ORM: https://hibernate.org/community/license/
+Project Lombok: https://projectlombok.org/
+Thymeleaf: https://www.thymeleaf.org/
+Other transitive components and their versions are listed in the Maven
+project model and included as nested dependency archives in the executable
+JAR. Consult their own license files and project documentation.
