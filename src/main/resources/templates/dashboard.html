@@ -15,8 +15,8 @@
 <div class="page-heading">
 <div>
 <span class="eyebrow">ОБЗОР ПРОЕКТА</span>
-<h1>Работа движется вперёд</h1>
-<p>Задачи, релизы и ближайшие ориентиры в одном месте.</p>
+<h1>Обзор проекта</h1>
+<p>Сводка по задачам и запланированным выпускам.</p>
 </div>
 <a class="button" th:if="${viewer.canWrite()}" href="/tasks/new">+ Новая задача</a>
 </div>
@@ -66,20 +66,10 @@
 </article>
 <article class="panel accent">
 <span class="eyebrow">ПЛАНИРОВАНИЕ</span>
-<h2>Сколько стоит<br>следующий выпуск?</h2>
-<p>Оцените бюджет с резервом и оставшуюся нагрузку команды.</p>
+<h2>Оценка релиза</h2>
+<p>Стоимость работ, резерв бюджета и дата завершения по оставшимся задачам.</p>
 <a class="button" href="/estimate">Рассчитать релиз</a>
-<div class="mini-track">
-<i>
-</i>
-<i>
-</i>
-<i>
-</i>
-<i>
-</i>
-</div>
-<small>Оценки задач → бюджет → плановая дата</small>
+<p class="planning-note">Оценка учитывает трудоёмкость задач и количество участников.</p>
 </article>
 </section>
 <section class="panel">
