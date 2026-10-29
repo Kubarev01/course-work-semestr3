@@ -1,0 +1,18 @@
+services:
+  app:
+    build: .
+    ports:
+      - "127.0.0.1:8082:8081"
+    environment:
+      SERVER_ADDRESS: 0.0.0.0
+      SERVER_PORT: 8081
+      SPRING_PROFILES_ACTIVE: demo
+      DB_URL: jdbc:h2:file:/app/data/releaseflow
+    volumes:
+      - releaseflow-data:/app/data
+      - releaseflow-logs:/app/logs
+    restart: unless-stopped
+
+volumes:
+  releaseflow-data:
+  releaseflow-logs:

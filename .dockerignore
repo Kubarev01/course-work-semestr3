@@ -1,0 +1,12 @@
+.git
+.idea
+.vscode
+target
+dist
+testdb
+logs
+evidence
+docs
+*.bundle
+*.zip
+.DS_Store
